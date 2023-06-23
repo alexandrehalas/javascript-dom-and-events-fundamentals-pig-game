@@ -26,15 +26,27 @@ const displayDice = function (diceNumber) {
   diceElement.src = `dice-${diceNumber}.png`;
 };
 
+const increaseScore = function (activePlayer, diceNumber) {
+  currentScore += diceNumber;
+  document.getElementById(`current--${activePlayer}`).textContent =
+    currentScore;
+};
+
 // starting conditions
 
 score0Element.textContent = 0;
 score1Element.textContent = 0;
 hideDice();
 
+let activePlayer = 0;
+let currentScore = 0;
+
 // buttons
 
 btnRoll.addEventListener('click', function () {
   const diceNumber = generateRandomDiceRoll();
   displayDice(diceNumber);
+  if (diceNumber !== 1) {
+    increaseScore(activePlayer, diceNumber);
+  }
 });
