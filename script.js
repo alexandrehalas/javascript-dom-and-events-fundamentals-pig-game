@@ -32,6 +32,10 @@ const increaseScore = function (activePlayer, diceNumber) {
     currentScore;
 };
 
+const switchPlayer = function () {
+  activePlayer = activePlayer === 0 ? 1 : 0;
+};
+
 // starting conditions
 
 score0Element.textContent = 0;
@@ -48,5 +52,7 @@ btnRoll.addEventListener('click', function () {
   displayDice(diceNumber);
   if (diceNumber !== 1) {
     increaseScore(activePlayer, diceNumber);
+  } else {
+    switchPlayer();
   }
 });
