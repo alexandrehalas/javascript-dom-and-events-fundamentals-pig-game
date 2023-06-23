@@ -28,21 +28,28 @@ const displayDice = function (diceNumber) {
   diceElement.src = `dice-${diceNumber}.png`;
 };
 
-const increaseScore = function (diceNumber) {
+const increaseCurrentScore = function (diceNumber) {
   currentScore += diceNumber;
   document.getElementById(`current--${activePlayer}`).textContent =
     currentScore;
+};
+
+const resetCurrentScore = function () {
+  currentScore = 0;
+  increaseCurrentScore(0);
+};
+
+const increaseScore = function () {
+  debugger;
+  scores[activePlayer] += currentScore;
+  document.getElementById(`score--${activePlayer}`).textContent =
+    scores[activePlayer];
 };
 
 const switchPlayer = function () {
   activePlayer = activePlayer === 0 ? 1 : 0;
   player0.classList.toggle('player--active');
   player1.classList.toggle('player--active');
-};
-
-const resetCurrentScore = function () {
-  currentScore = 0;
-  increaseScore(0);
 };
 
 // starting conditions
@@ -55,6 +62,7 @@ hideDice();
 
 let activePlayer = 0;
 let currentScore = 0;
+let scores = [0, 0];
 
 // buttons
 
@@ -62,9 +70,15 @@ btnRoll.addEventListener('click', function () {
   const diceNumber = generateRandomDiceRoll();
   displayDice(diceNumber);
   if (diceNumber !== 1) {
-    increaseScore(diceNumber);
+    increaseCurrentScore(diceNumber);
   } else {
     resetCurrentScore();
     switchPlayer();
   }
+});
+
+btnHold.addEventListener('click', function () {
+  increaseScore();
+  resetCurrentScore();
+  switchPlayer();
 });
