@@ -52,6 +52,21 @@ const switchPlayer = function () {
   player1.classList.toggle('player--active');
 };
 
+const hasWinner = function () {
+  return scores[activePlayer] >= 100;
+};
+
+const finishGame = function () {
+  document
+    .querySelector(`.player--${activePlayer}`)
+    .classList.remove('player--active');
+  document
+    .querySelector(`.player--${activePlayer}`)
+    .classList.add('player--winner');
+  playing = false;
+  hideDice();
+};
+
 // starting conditions
 
 score0Element.textContent = 0;
@@ -60,6 +75,7 @@ hideDice();
 
 // variables
 
+let playing = true;
 let activePlayer = 0;
 let currentScore = 0;
 let scores = [0, 0];
@@ -67,6 +83,9 @@ let scores = [0, 0];
 // buttons
 
 btnRoll.addEventListener('click', function () {
+  if (!playing) {
+    return;
+  }
   const diceNumber = generateRandomDiceRoll();
   displayDice(diceNumber);
   if (diceNumber !== 1) {
@@ -78,7 +97,13 @@ btnRoll.addEventListener('click', function () {
 });
 
 btnHold.addEventListener('click', function () {
+  if (!playing) {
+    return;
+  }
   increaseScore();
+  if (hasWinner()) {
+    finishGame();
+  }
   resetCurrentScore();
   switchPlayer();
 });
