@@ -15,6 +15,27 @@ const btnHold = document.querySelector('.btn--hold');
 
 // functions
 
+const initializeGame = function () {
+  playing = true;
+  activePlayer = 0;
+  currentScore = 0;
+  scores = [0, 0];
+
+  score0Element.textContent = 0;
+  score1Element.textContent = 0;
+  currentScore0Element.textContent = 0;
+  currentScore1Element.textContent = 0;
+
+  document.querySelector(`.player--0`).classList.remove('player--active');
+  document.querySelector(`.player--1`).classList.remove('player--active');
+  document.querySelector(`.player--0`).classList.add('player--active');
+
+  document.querySelector(`.player--0`).classList.remove('player--winner');
+  document.querySelector(`.player--1`).classList.remove('player--winner');
+
+  hideDice();
+};
+
 const hideDice = function () {
   diceElement.classList.add('hidden');
 };
@@ -53,7 +74,7 @@ const switchPlayer = function () {
 };
 
 const hasWinner = function () {
-  return scores[activePlayer] >= 100;
+  return scores[activePlayer] >= 10;
 };
 
 const finishGame = function () {
@@ -67,18 +88,14 @@ const finishGame = function () {
   hideDice();
 };
 
-// starting conditions
-
-score0Element.textContent = 0;
-score1Element.textContent = 0;
-hideDice();
-
 // variables
 
-let playing = true;
-let activePlayer = 0;
-let currentScore = 0;
-let scores = [0, 0];
+let playing;
+let activePlayer;
+let currentScore;
+let scores;
+
+window.onload = initializeGame();
 
 // buttons
 
@@ -106,4 +123,8 @@ btnHold.addEventListener('click', function () {
   }
   resetCurrentScore();
   switchPlayer();
+});
+
+btnNew.addEventListener('click', function () {
+  initializeGame();
 });
