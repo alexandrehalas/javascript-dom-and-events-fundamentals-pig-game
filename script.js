@@ -74,7 +74,7 @@ const switchPlayer = function () {
 };
 
 const hasWinner = function () {
-  return scores[activePlayer] >= 10;
+  return scores[activePlayer] >= 100;
 };
 
 const finishGame = function () {
